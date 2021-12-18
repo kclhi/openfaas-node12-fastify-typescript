@@ -1,12 +1,9 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./",
-    "declaration": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "outDir":"./build",
+    "noImplicitReturns":true,
+    "noImplicitAny":true
   },
   "include": ["./src/**/*"],
   "exclude": [

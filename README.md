@@ -1,10 +1,10 @@
-# openfaas-node12-fastify-typescript
+# openfaas-node16-fastify-typescript
 
 ## Set this as your OpenFaaS template
 
 ```bash
-$ faas template pull https://github.com/pastelcolors/openfaas-node12-fastify-typescript
-$ faas new --lang typescript-fastify
+$ faas-cli template pull https://github.com/kclreflect/openfaas-node16-fastify-typescript
+$ faas-cli new --lang typescript-fastify temp
 ```
 
 ## License

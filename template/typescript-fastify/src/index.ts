@@ -11,7 +11,7 @@ import {
 import cors from 'fastify-cors';
 import fastifyHelmet from 'fastify-helmet';
 
-import { ContextPayload, EventPayload } from '../function/types';
+import { ContextPayload, EventPayload } from './types';
 
 import handler from '../function/handler';
 
