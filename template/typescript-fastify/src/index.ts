@@ -10,6 +10,7 @@ import {
 
 import cors from 'fastify-cors';
 import fastifyHelmet from 'fastify-helmet';
+import fastifyFormBody from 'fastify-formbody';
 
 import { ContextPayload, EventPayload } from './types';
 
@@ -90,6 +91,7 @@ const SERVER: FastifyInstance<
 });
 
 SERVER.register(fastifyHelmet);
+SERVER.register(fastifyFormBody);
 
 SERVER.register(cors, {
   origin: (origin, callback) => {
