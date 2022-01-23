@@ -1,33 +1,27 @@
 /* eslint-disable max-classes-per-file */
-import fastify, { FastifyInstance, FastifyRequest } from 'fastify';
-import {
-  Server,
-  IncomingMessage,
-  ServerResponse,
-  IncomingHttpHeaders,
-  OutgoingHttpHeaders,
-} from 'http';
+import fastify, {FastifyInstance, FastifyRequest} from 'fastify';
+import {Server, IncomingMessage, ServerResponse, IncomingHttpHeaders, OutgoingHttpHeaders} from 'http';
 
 import cors from 'fastify-cors';
 import fastifyHelmet from 'fastify-helmet';
 import fastifyFormBody from 'fastify-formbody';
 
-import { ContextPayload, EventPayload } from './types';
+import {ContextPayload, EventPayload} from './types';
 
 import handler from '../function/handler';
 
 class Event implements EventPayload {
-  body: unknown;
+  body:unknown;
 
-  headers: IncomingHttpHeaders;
+  headers:IncomingHttpHeaders;
 
-  method: string;
+  method:string;
 
-  query: unknown;
+  query:unknown;
 
-  path: string;
+  path:string;
 
-  constructor(req: FastifyRequest) {
+  constructor(req:FastifyRequest) {
     this.body = req.body;
     this.headers = req.headers;
     this.method = req.method;
@@ -37,13 +31,13 @@ class Event implements EventPayload {
 }
 
 class Context implements ContextPayload {
-  statusCode: number;
+  statusCode:number;
 
-  headerValues: OutgoingHttpHeaders;
+  headerValues:OutgoingHttpHeaders;
 
-  result: unknown;
+  result:unknown;
 
-  error: Error | null;
+  error:Error | null;
 
   constructor() {
     // Assumes the default response
@@ -53,8 +47,8 @@ class Context implements ContextPayload {
     this.error = null;
   }
 
-  code(statusCode?: number): this {
-    if (!statusCode) {
+  code(statusCode?:number):this {
+    if(!statusCode) {
       return this;
     }
 
@@ -62,8 +56,8 @@ class Context implements ContextPayload {
     return this;
   }
 
-  headers(headerValues?: OutgoingHttpHeaders): this {
-    if (!headerValues) {
+  headers(headerValues?:OutgoingHttpHeaders):this {
+    if(!headerValues) {
       return this;
     }
 
@@ -71,23 +65,19 @@ class Context implements ContextPayload {
     return this;
   }
 
-  send(result: unknown): this {
+  send(result:unknown):this {
     this.result = result;
     return this;
   }
 
-  err(error: Error): this {
+  err(error:Error):this {
     this.error = error;
     return this;
   }
 }
 
-const SERVER: FastifyInstance<
-  Server,
-  IncomingMessage,
-  ServerResponse
-> = fastify({
-  logger: process.env.ENABLE_LOGGING === 'true',
+const SERVER:FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify({
+  logger: process.env.ENABLE_LOGGING === 'true'
 });
 
 SERVER.register(fastifyHelmet);
@@ -95,23 +85,23 @@ SERVER.register(fastifyFormBody);
 
 SERVER.register(cors, {
   origin: (origin, callback) => {
-    if (process.env.NODE_ENV !== 'production') {
+    if(process.env.NODE_ENV !== 'production') {
       callback(null, true);
       return;
     }
-    if (process.env.CORS_ORIGIN || '*') {
+    if(process.env?.CORS_ORIGIN == '*') {
       callback(null, true);
       return;
     }
-    if (/localhost/.test(origin)) {
+    if(/localhost/.test(origin)) {
       callback(null, true);
       return;
     }
     callback(new Error(`Illegal origin '${origin}'`), false);
-  },
+  }
 });
 
-SERVER.all('/*', async (req, res) => {
+SERVER.all('/*', async(req, res) => {
   const event = new Event(req);
   const context = new Context();
 
@@ -120,13 +110,13 @@ SERVER.all('/*', async (req, res) => {
 
     res.headers(handlerRes.headerValues).status(handlerRes.statusCode);
     return handlerRes.result;
-  } catch (err) {
+  } catch(err) {
     return res.code(500);
   }
 });
 
 SERVER.listen(3000, '0.0.0.0', (err, address) => {
-  if (err) throw err;
+  if(err) throw err;
 
   SERVER.log.info(`server listening on ${address}`);
 });
