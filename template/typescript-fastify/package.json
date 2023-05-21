@@ -7,7 +7,7 @@
   "dependencies": {
     "@tsconfig/node16": "^1.0.4",
     "esbuild": "^0.17.19",
-    "fastify": "^4.17.0",
+    "fastify": "^3.29.5",
     "fastify-cors": "^6.1.0",
     "fastify-formbody": "^5.3.0",
     "fastify-helmet": "^7.1.0"
@@ -22,7 +22,7 @@
     "@types/node": "^20.2.1",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   }
