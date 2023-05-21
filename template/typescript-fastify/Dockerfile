@@ -24,7 +24,7 @@ WORKDIR /home/app
 COPY package.json ./
 
 # This ordering means the npm installation is cached for the outer function handler.
-RUN npm i --only=production
+RUN npm i --omit=dev
 
 # Copy outer function handler
 COPY src/index.ts ./src/index.ts
