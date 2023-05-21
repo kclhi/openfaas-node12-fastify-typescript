@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "OpenFaaS Function",
   "main": "handler.js",
+  "type": "module",
   "scripts": {
     "test": "NODE_ENV=test mocha './tests/**/*.ts'",
     "lint": "eslint . --ext .ts",

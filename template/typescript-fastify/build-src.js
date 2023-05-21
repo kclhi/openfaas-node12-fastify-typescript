@@ -7,10 +7,9 @@ esbuild.buildSync({
   ],
   outfile: './index.js',
   bundle: true,
-  minify: true,
   sourcemap: false,
   platform: 'node',
   tsconfig: './tsconfig.json',
   external: Object.keys(packageJSON.dependencies),
-  target: "es2020",
+  target: "esnext",
 });
