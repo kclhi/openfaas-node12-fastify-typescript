@@ -7,8 +7,11 @@ ARG BUILDPLATFORM
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
-RUN apk --no-cache add curl ca-certificates \
+RUN apk --no-cache add curl ca-certificates tzdata \
     && addgroup -S app && adduser -S -g app app
+
+ENV TZ="Europe/London"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Turn down the verbosity to default level.
 ENV NPM_CONFIG_LOGLEVEL warn
