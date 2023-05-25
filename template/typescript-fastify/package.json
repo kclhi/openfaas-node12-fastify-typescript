@@ -7,10 +7,11 @@
   "dependencies": {
     "@tsconfig/node16": "^1.0.4",
     "esbuild": "^0.17.19",
-    "fastify": "^3.29.5",
-    "fastify-cors": "^6.1.0",
-    "fastify-formbody": "^5.3.0",
-    "fastify-helmet": "^7.1.0"
+    "fastify": "^4.17.0",
+    "@fastify/cors": "^8.3.0",
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/helmet": "^10.1.1",
+    "@fastify/multipart": "^7.6.0"
   },
   "scripts": {
     "build": "node build-src",
@@ -19,9 +20,9 @@
     "prettier": "prettier --config .prettierrc '**/*.ts' --write; eslint . --ext .ts --fix"
   },
   "devDependencies": {
-    "@types/node": "^20.2.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
+    "@types/node": "^20.2.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
     "eslint": "^8.41.0",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"

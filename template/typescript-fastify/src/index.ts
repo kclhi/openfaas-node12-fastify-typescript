@@ -2,9 +2,10 @@
 import fastify, {FastifyInstance, FastifyRequest} from 'fastify';
 import {Server, IncomingMessage, ServerResponse, IncomingHttpHeaders, OutgoingHttpHeaders} from 'http';
 
-import cors from 'fastify-cors';
-import fastifyHelmet from 'fastify-helmet';
-import fastifyFormBody from 'fastify-formbody';
+import cors from '@fastify/cors';
+import fastifyHelmet from '@fastify/helmet';
+import fastifyFormBody from '@fastify/formbody';
+import multipart from '@fastify/multipart';
 
 import {ContextPayload, EventPayload} from './types';
 
@@ -82,6 +83,7 @@ const SERVER:FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(
 
 SERVER.register(fastifyHelmet);
 SERVER.register(fastifyFormBody);
+SERVER.register(multipart, {attachFieldsToBody: 'keyValues'});
 
 SERVER.register(cors, {
   origin: (origin, callback) => {
@@ -101,21 +103,25 @@ SERVER.register(cors, {
   }
 });
 
-SERVER.all('/*', async(req, res) => {
-  const event = new Event(req);
-  const context = new Context();
+SERVER.route({
+  url: '/*',
+  method: ['GET', 'POST', 'DELETE', 'PUT'],
+  handler: async(req, res) => {
+    const event = new Event(req);
+    const context = new Context();
 
-  try {
-    const handlerRes = await handler(event, context);
+    try {
+      const handlerRes = await handler(event, context);
 
-    res.headers(handlerRes.headerValues).status(handlerRes.statusCode);
-    return handlerRes.result;
-  } catch(err) {
-    return res.code(500);
+      res.headers(handlerRes.headerValues).status(handlerRes.statusCode);
+      return handlerRes.result;
+    } catch(err) {
+      return res.code(500);
+    }
   }
 });
 
-SERVER.listen(3000, '0.0.0.0', (err, address) => {
+SERVER.listen({port: 3000, host: '0.0.0.0'}, (err, address) => {
   if(err) throw err;
 
   SERVER.log.info(`server listening on ${address}`);
